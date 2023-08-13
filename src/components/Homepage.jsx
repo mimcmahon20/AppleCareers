@@ -265,8 +265,11 @@ export default function Homepage() {
       ) {
         secondTextUnderPhotoRef.current.style.display = "block";
         secondTextUnderPhotoRef.current.style.position = "unset";
+        secondTextUnderPhotoRef.current.style.zIndex = "4";
+
       } else {
         secondTextUnderPhotoRef.current.style.position = "fixed";
+        secondTextUnderPhotoRef.current.style.zIndex = "1";
       }
       console.log(
         thirdTextUnderPhotoContainerRef.current.getBoundingClientRect().y
