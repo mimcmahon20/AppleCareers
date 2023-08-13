@@ -4,6 +4,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import photoonedesktop from "../assets/photoonedesktop.jpg";
 import phototwodesktop from "../assets/phototwodesktop.jpg";
+import photothreedesktop from "../assets/photothreedesktop.jpg";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -24,6 +25,13 @@ export default function Homepage() {
   const photoTwoRef = useRef(null);
   const secondTextUnderPhotoRef = useRef(null);
   const secondTextUnderPhotoContainerRef = useRef(null);
+
+  const photoThreeRef = useRef(null);
+  const thirdTextUnderPhotoRef = useRef(null);
+  const thirdTextUnderPhotoContainerRef = useRef(null);
+  const extraTextUnderThirdPhoto = useRef(null);
+
+  const tempSpacerRef = useRef(null);
 
   useEffect(() => {
     let tlVideoText = gsap.timeline({});
@@ -61,45 +69,41 @@ export default function Homepage() {
       }
     );
 
-      let tlTextOneUnderVideo = gsap.timeline({});
-      tlTextOneUnderVideo.fromTo(
-        firstTextUnderVideoRef.current,
-        { opacity: 0, y: 200 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 1,
-          scrollTrigger: {
-            trigger: textUnderVideoRef.current,
-            start: "top bottom-=250",
-            end: "top center",
-            scrub: true,
-            markers: false,
-          },
-        }
-      );
+    let tlTextOneUnderVideo = gsap.timeline({});
+    tlTextOneUnderVideo.fromTo(
+      firstTextUnderVideoRef.current,
+      { opacity: 0, y: 200 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        scrollTrigger: {
+          trigger: textUnderVideoRef.current,
+          start: "top bottom-=250",
+          end: "top center",
+          scrub: true,
+          markers: false,
+        },
+      }
+    );
 
-      let tlTextTwoUnderVideo = gsap.timeline({});
-      tlTextTwoUnderVideo.fromTo(
-        secondTextUnderVideoRef.current,
-        { opacity: 0, y: 250 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 1,
-          scrollTrigger: {
-            trigger: textUnderVideoRef.current,
-            start: "top bottom-=500",
-            end: "top center-=250",
-            scrub: true,
-            markers: true,
-          },
-        }
-      );
-
-
-
-
+    let tlTextTwoUnderVideo = gsap.timeline({});
+    tlTextTwoUnderVideo.fromTo(
+      secondTextUnderVideoRef.current,
+      { opacity: 0, y: 250 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        scrollTrigger: {
+          trigger: textUnderVideoRef.current,
+          start: "top bottom-=500",
+          end: "top center-=250",
+          scrub: true,
+          markers: false,
+        },
+      }
+    );
 
     let tlPhotoOneText = gsap.timeline({});
     tlPhotoOneText.fromTo(
@@ -161,13 +165,66 @@ export default function Homepage() {
         duration: 1,
         scrollTrigger: {
           trigger: secondTextUnderPhotoContainerRef.current,
-          start: "center center",
-          end: "top top",
+          start: "top center",
+          end: "center center",
           scrub: true,
           markers: false,
         },
       }
     );
+
+    let tlPhotoThreeText = gsap.timeline({});
+    tlPhotoThreeText.fromTo(
+      photoThreeRef.current.children[0],
+      { y: 500 },
+      {
+        y: 0,
+        duration: 1,
+        scrollTrigger: {
+          trigger: photoThreeRef.current,
+          start: "top-=250 center-=250",
+          end: "center center",
+          scrub: true,
+          markers: false,
+        },
+      }
+    );
+
+    let tlTextUnderPhotoThree = gsap.timeline({});
+    tlTextUnderPhotoThree.fromTo(
+      thirdTextUnderPhotoRef.current,
+      { opacity: 0 },
+      {
+        opacity: 1,
+        duration: 1,
+        scrollTrigger: {
+          trigger: thirdTextUnderPhotoContainerRef.current,
+          start: "top center",
+          end: "center center",
+          scrub: true,
+          markers: false,
+        },
+      }
+    );
+
+    let tlExtraTextUnderPhotoThree = gsap.timeline({});
+    tlExtraTextUnderPhotoThree.fromTo(
+      extraTextUnderThirdPhoto.current,
+      { y: window.innerHeight / 2 },
+      {
+        y: 0,
+        duration: 1,
+        scrollTrigger: {
+          trigger: thirdTextUnderPhotoContainerRef.current,
+          start: "center center",
+          end: "bottom center+=250",
+          scrub: true,
+          markers: true,
+        },
+      }
+    );
+
+
 
     window.addEventListener("scroll", () => {
       if (
@@ -188,6 +245,22 @@ export default function Homepage() {
         secondTextUnderPhotoRef.current.style.position = "unset";
       } else {
         secondTextUnderPhotoRef.current.style.position = "fixed";
+      }
+      console.log(
+        thirdTextUnderPhotoContainerRef.current.getBoundingClientRect().y
+      );
+
+      if (
+        thirdTextUnderPhotoContainerRef.current.getBoundingClientRect().y <=
+        -window.innerHeight
+      ) {
+        thirdTextUnderPhotoRef.current.style.display = "block";
+        thirdTextUnderPhotoRef.current.style.paddingTop =
+          window.innerHeight + "px";
+        thirdTextUnderPhotoRef.current.style.position = "unset";
+      } else {
+        thirdTextUnderPhotoRef.current.style.position = "fixed";
+        thirdTextUnderPhotoRef.current.style.paddingTop = "0px";
       }
     });
   }, []);
@@ -232,7 +305,10 @@ export default function Homepage() {
               connections while you`re studying.
             </p>
           </div>
-          <div className="second-text-under-video" ref={secondTextUnderVideoRef}>
+          <div
+            className="second-text-under-video"
+            ref={secondTextUnderVideoRef}
+          >
             <h2 className="large-text">Apple Internships</h2>
             <p className="small-text">
               Come to Apple as an intern and you`ll be welcomed as a full
@@ -245,12 +321,12 @@ export default function Homepage() {
               can apply what you`re studying now to your work as an Apple
               intern.
             </p>
-          <div className="text-links">
-            <button className="link">Find Available internships </button>
-            <button className="link">
-              Watch the film about what it`s like to become an Apple intern
-            </button>
-          </div>
+            <div className="text-links">
+              <button className="link">Find Available internships </button>
+              <button className="link">
+                Watch the film about what it`s like to become an Apple intern
+              </button>
+            </div>
           </div>
         </div>
       </section>
@@ -360,6 +436,78 @@ export default function Homepage() {
           </div>
         </section>
       </div>
+
+      <section className="section-fullscreen">
+        <div className="photo-section-container" ref={photoThreeRef}>
+          <section className="photo-text">
+            <h1 className="photo-quote">
+              “I learned to be the cool and calm problem solver — even when
+              things got challenging.”
+            </h1>
+            <h3 className="photo-reference">
+              Quincy, Apple IS&T analyst and former Apple Support College
+              Advisor
+            </h3>
+            <button className="photo-link">Read Quincy's Story</button>
+          </section>
+          <img
+            src={photothreedesktop}
+            alt="photothreedesktop"
+            className="photo-section-image"
+          />
+        </div>
+      </section>
+
+      <div
+        className="text-location final-text-location"
+        ref={thirdTextUnderPhotoContainerRef}
+      >
+        <section
+          className="section-fullscreen absolute-under clear"
+          ref={thirdTextUnderPhotoRef}
+        >
+          <div className="text-section-container fixed">
+            <h1 className="large-text padding-top">
+              Apple Store and Retail Partner Store
+            </h1>
+            <p className="small-text padding-bottom">
+              Work at an Apple Store, where different roles can support a range
+              of interests and goals, or work at a retail partner store,
+              ensuring that customers get a great Apple retail experience there,
+              too. Both part-time and full-time positions are available, and no
+              tech experience is needed. We’ll provide the training you need for
+              your role and the support to help you grow both personally and
+              professionally.
+            </p>
+            <div className="text-links">
+              <button className="link">
+                Find available Apple Store and retail partner store
+                opportunities
+              </button>
+            </div>
+          </div>
+
+          <section className="extra-text text-section-container" ref={extraTextUnderThirdPhoto}>
+            <div className="extra-text-container">
+              <h1 className="large-text">
+                Opportunities After You’ve Graduated
+              </h1>
+              <p className="small-text padding-bottom">
+                We’ve always thought of Apple as the intersection of technology
+                and the liberal arts. That’s why we look for a wide range of
+                great minds, in technical and nontechnical fields, regardless of
+                the degree. With so many ways to contribute here, chances are
+                good you’ll find a way to do what you love.
+              </p>
+              <div className="text-links">
+                <button className="link">Learn about work at Apple</button>
+              </div>
+            </div>
+          </section>
+        </section>
+      </div>
+
+      <div className="spacer" ref={tempSpacerRef}></div>
     </div>
   );
 }
