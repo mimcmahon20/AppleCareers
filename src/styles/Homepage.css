@@ -81,6 +81,7 @@
 
 .text-section-container {
     width: 980px;
+    max-height: 100vh;
     margin: 0 auto;
     color: #333333;
 }
@@ -93,9 +94,12 @@
     padding-top: 10vh;
 }
 
+.bold {
+    font-weight: 500 !important;
+}
+
 .large-text {
     margin: 0;
-    
     font-size: 48px;
     line-height: 1.08349;
     font-weight: 600;
@@ -103,8 +107,12 @@
     font-family: SF Pro Display,SF Pro Icons,Helvetica Neue,Helvetica,Arial,sans-serif;
 }
 
-.small-text {
+.medium-text {
     font-size: 24px;
+}
+
+.small-text {
+    font-size: 21px;
     line-height: 1.33341;
     font-weight: 400;
     letter-spacing: .009em;
@@ -222,7 +230,44 @@
     opacity: 0;
 }
 
+.three-photo-container {
+    width: 980px;
+    margin: 0 auto;
+    border: 1px solid blue;
+}
 
+.three-photo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 0px;
+}
+
+.three-photo-item {
+    position: relative;
+    overflow: hidden;
+}
+
+.three-photo-item > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.left-grid-item {
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 2;
+}
+
+.top-grid-item {
+    grid-column: 2 / span 1;
+    grid-row: 1 / 2;
+}
+
+.bottom-grid-item {
+    grid-column: 2 / span 1;
+    grid-row: 2 / span 1;
+}
 
 .spacer {
     height: 200vh;

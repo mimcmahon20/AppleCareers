@@ -5,6 +5,9 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import photoonedesktop from "../assets/photoonedesktop.jpg";
 import phototwodesktop from "../assets/phototwodesktop.jpg";
 import photothreedesktop from "../assets/photothreedesktop.jpg";
+import leftgridphoto from "../assets/leftgridphoto.jpg";
+import topgridphoto from "../assets/topgridphoto.jpg";
+import bottomgridphoto from "../assets/bottomgridphoto.jpg";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -30,6 +33,8 @@ export default function Homepage() {
   const thirdTextUnderPhotoRef = useRef(null);
   const thirdTextUnderPhotoContainerRef = useRef(null);
   const extraTextUnderThirdPhoto = useRef(null);
+
+  const photoGridRef = useRef(null);
 
   const tempSpacerRef = useRef(null);
 
@@ -219,12 +224,29 @@ export default function Homepage() {
           start: "center center",
           end: "bottom center+=250",
           scrub: true,
-          markers: true,
+          markers: false,
         },
       }
     );
 
-
+    let tlphotoGridRef = gsap.timeline({});
+    tlphotoGridRef.fromTo(
+      photoGridRef.current,
+      {
+        gap: "100px 8px",
+      },
+      {
+        gap: "8px 8px",
+        duration: 1,
+        scrollTrigger: {
+          trigger: photoGridRef.current,
+          start: "top-=250 center-=250",
+          end: "center center",
+          scrub: true,
+          markers: true,
+        },
+      }
+    );
 
     window.addEventListener("scroll", () => {
       if (
@@ -299,7 +321,7 @@ export default function Homepage() {
             <h1 className="large-text padding-top">
               Different Opportunities for Different Students
             </h1>
-            <p className="small-text padding-bottom">
+            <p className="small-text padding-bottom bold">
               Part-time, full-time. On campus, off campus. During summer, or all
               year long. Each of these roles helps you build a career and
               connections while you`re studying.
@@ -487,7 +509,10 @@ export default function Homepage() {
             </div>
           </div>
 
-          <section className="extra-text text-section-container" ref={extraTextUnderThirdPhoto}>
+          <section
+            className="extra-text text-section-container"
+            ref={extraTextUnderThirdPhoto}
+          >
             <div className="extra-text-container">
               <h1 className="large-text">
                 Opportunities After You’ve Graduated
@@ -506,6 +531,45 @@ export default function Homepage() {
           </section>
         </section>
       </div>
+
+      <section className="three-photo-container">
+        <div className="three-photo-grid" ref={photoGridRef}>
+          <div className="three-photo-item left-grid-item">
+            <img src={leftgridphoto} alt="gridphoto"></img>
+          </div>
+          <div className="three-photo-item top-grid-item">
+            <img src={topgridphoto} alt="gridphoto"></img>
+          </div>
+          <div className="three-photo-item bottom-grid-item">
+            <img src={bottomgridphoto} alt="gridphoto"></img>
+          </div>
+        </div>
+      </section>
+
+      <section className="section-fullscreen">
+        <div className="values-section">
+          <div className="values-section-container">
+            <h2 className="medium-text">Apple Values</h2>
+            <h1 className="large-text">
+              An Apple experience respects and reflects what’s important. To
+              you.
+            </h1>
+            <p className="small-text">
+              Each of us here is inspired to do work that aligns with our
+              personal values. And we thrive in a culture that helps us feel
+              supported, connected, and empowered.
+            </p>
+            <div className="value-link-container">
+              <button className="value-link">
+                Learn more about Apple Values
+              </button>
+              <button className="value-link">
+                Learn more about Apple Values
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <div className="spacer" ref={tempSpacerRef}></div>
     </div>
